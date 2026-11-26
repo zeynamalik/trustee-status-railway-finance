@@ -15,6 +15,7 @@
 # ============================================================================
 
 source("scripts/00_utils.R")
+use_output("results")
 suppressPackageStartupMessages({ library(rdrobust); library(rddensity) })
 print_header("STEP 5: REGRESSION DISCONTINUITY")
 

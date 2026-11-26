@@ -17,10 +17,19 @@ suppressPackageStartupMessages({
 RAW_RAILWAYS  <- "data/raw/Railways_new.csv"   # IMM original railway records
 RAW_TOTAL     <- "data/raw/Totaldata.csv"      # IMM cleaned subset (names, ISO, gov. bonds)
 DERIVED_DIR   <- "data/derived"
-TABLE_DIR     <- "output/tables"
-FIGURE_DIR    <- "output/figures"
+dir.create(DERIVED_DIR, showWarnings = FALSE, recursive = TRUE)
 
-for (d in c(DERIVED_DIR, TABLE_DIR, FIGURE_DIR)) dir.create(d, showWarnings = FALSE, recursive = TRUE)
+# Outputs are split as in the paper: descriptive exhibits vs. regression results.
+# Each output-writing script calls use_output("exhibits") or use_output("results").
+TABLE_DIR  <- "output/exhibits/tables"
+FIGURE_DIR <- "output/exhibits/figures"
+use_output <- function(section = c("exhibits", "results")) {
+  section <- match.arg(section)
+  TABLE_DIR  <<- file.path("output", section, "tables")
+  FIGURE_DIR <<- file.path("output", section, "figures")
+  for (d in c(TABLE_DIR, FIGURE_DIR)) dir.create(d, showWarnings = FALSE, recursive = TRUE)
+  invisible(section)
+}
 
 # ============================================================================
 # INSTITUTIONAL CONSTANTS

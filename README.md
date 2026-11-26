@@ -2,7 +2,7 @@
 
 **Regulatory eligibility, dividend management, and bond prices in Britain, 1879–1922: an econometric analysis of the Victorian trustee-investment rules using security-level data from the *Investors Monthly Manual*.**
 
-📄 **Paper:** [`Paper_Trustee_Status_and_the_Cost_of_Railway_Capital.pdf`](Paper_Trustee_Status_and_the_Cost_of_Railway_Capital.pdf)
+📄 **Paper:** [`Paper_Trustee_Status_and_the_Cost_of_Railway_Capital.pdf`](Paper_Trustee_Status_and_the_Cost_of_Railway_Capital.pdf) · 📘 **Methodology:** [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md)
 
 ---
 
@@ -23,6 +23,7 @@ The repository rebuilds ten-year dividend records for British and Irish railway 
 3. **Statutory trustee status in 1921 did not reprice senior stock on average.** Companies that qualified only through s.15 of the Railways Act 1921 saw yields move **−1.0 bp** relative to companies that already qualified (s.e. 8.3, wild-bootstrap p = 0.93), or +7.2 bp with matched controls.
 4. **Interpretation:** the legal list changed *corporate behavior* without measurably changing *prices* at the margin. That fits a rule that was slack for marginal companies: trust deeds often granted wider powers, and trustees favored first-class stocks far above the threshold.
 
+
 ---
 
 ## Repository structure
@@ -30,29 +31,44 @@ The repository rebuilds ten-year dividend records for British and Irish railway 
 ```
 trustee-status-railway-finance/
 ├── Paper_Trustee_Status_and_the_Cost_of_Railway_Capital.pdf
-├── README.md
+├── README.md                         # This file
+│
+├── docs/                             # Documentation for reviewers
+│   ├── METHODOLOGY.md                # Rule, variable construction, equations, inference
+│   ├── CODEBOOK.md                   # Every variable in the derived datasets
+│   └── SOURCES.md                    # Statutes, Hansard, literature (with links)
+│
 ├── config/
-│   └── company_exclusions.csv     # hand-coded foreign / leased / jointly owned lines, with reasons
-├── data/
-│   ├── README.md                  # how to download the IMM files (not redistributed)
-│   ├── raw/                       # Railways_new.csv, Totaldata.csv  (git-ignored)
-│   └── derived/                   # intermediate .rds files            (git-ignored)
-├── scripts/
-│   ├── run_all.R                  # runs the full pipeline in order
-│   ├── 00_utils.R                 # paths, constants, table writer, figure theme, wild bootstrap
-│   ├── 01_build_panel.R           # raw IMM -> classified security-month and security-year panels
-│   ├── 02_running_variable.R      # ordinary dividends (3 measures) -> 10-year minimum, eligibility
-│   ├── 03_analysis_sample.R       # merges, sample restrictions, sample flow
-│   ├── 04_descriptives.R          # table1, table2, table_a1; fig1-fig4
-│   ├── 05_rd_estimates.R          # table3-table5; fig5-fig7 (RD, validity, multiple testing)
-│   ├── 06_panel_and_iv.R          # table6 (fixed effects, fuzzy RD / 2SLS)
-│   ├── 07_dividend_management.R   # table7 (LPM / logit / probit bunching tests)
-│   └── 08_railways_act_1921.R     # table8; fig8 (difference-in-differences, event study)
-├── output/
-│   ├── tables/                    # LaTeX table fragments, notes, and macros_*.tex (numbers in the text)
-│   └── figures/                   # PDF (vector) and PNG (300 dpi) figures
+│   └── company_exclusions.csv        # Hand-coded foreign / leased / jointly owned lines, with reasons
+│
+├── data/                             # Data files (NOT in GitHub; see data/README.md)
+│   ├── README.md                     # Download instructions and known data issues
+│   ├── raw/                          # Railways_new.csv, Totaldata.csv
+│   └── derived/                      # Intermediate .rds panels
+│
+├── scripts/                          # R analysis scripts
+│   ├── run_all.R                     # Runs the full pipeline in order
+│   ├── 00_utils.R                    # Paths, constants, table writer, figure theme, wild bootstrap
+│   ├── 01_build_panel.R              # Raw IMM -> classified security-month / security-year panels
+│   ├── 02_running_variable.R         # Ordinary dividends (3 measures) -> ten-year minimum, eligibility
+│   ├── 03_analysis_sample.R          # Merges, sample restrictions, sample flow
+│   ├── exhibits/                     # Descriptive statistics
+│   │   ├── 04_descriptives.R         # Tables 1, 2, 9; Figures 1-3, 8
+│   │   ├── README.md
+│   │   └── QUALITY_REVIEW.md         # Data-construction and exhibit checks
+│   └── results/                      # Regression results
+│       ├── 05_rd_estimates.R         # RD, validity, multiple testing (Tables 4-6; Figures 4-6)
+│       ├── 06_panel_and_iv.R         # Fixed effects, fuzzy RD / 2SLS (Table 7)
+│       ├── 07_dividend_management.R  # LPM / logit / probit bunching tests (Table 3)
+│       ├── 08_railways_act_1921.R    # DiD, event study, matching (Table 8; Figure 7)
+│       └── README.md
+│
+├── output/                           # Generated outputs
+│   ├── exhibits/{tables,figures}/    # Descriptive tables (.tex) and figures (PDF + PNG)
+│   └── results/{tables,figures}/     # Regression tables (.tex) and figures (PDF + PNG)
+│
 └── paper/
-    └── main.tex                   # paper source; reads every number from output/tables/macros_*.tex
+    └── main.tex                      # Paper source; every quoted number is read from output/*/tables/macros_*.tex
 ```
 
 ---
@@ -80,7 +96,7 @@ install.packages(c(
 
 ### Data setup
 
-The IMM data are distributed by the International Center for Finance at Yale for academic use and **may not be redistributed**, so they are not in this repository. See [`data/README.md`](data/README.md) for download links. In short, put `Railways_new.csv` and `Totaldata.csv` in `data/raw/`.
+The IMM data are distributed by the International Center for Finance at Yale for academic use and **may not be redistributed**, so they are not in this repository. Download `Railways_new.csv` and `Totaldata.csv` from the ICF (links in [`data/README.md`](data/README.md)) and place them in `data/raw/`.
 
 ---
 
@@ -89,101 +105,102 @@ The IMM data are distributed by the International Center for Finance at Yale for
 From the project root:
 
 ```bash
-Rscript scripts/run_all.R            # about 10 minutes, mostly wild-cluster bootstraps
+Rscript scripts/run_all.R             # full pipeline, about 10 minutes
 cd paper && latexmk -pdf main.tex     # optional: rebuild the paper
 ```
 
-Each script can also be run on its own, in order. Scripts 01–03 write intermediate files to `data/derived/`, and scripts 04–08 read them.
+| Step | Script | Runtime | Output |
+|---|---|---|---|
+| 1. Build panels | `scripts/01_build_panel.R` | ~40 s | `data/derived/sec_month.rds`, `sec_year.rds` |
+| 2. Running variable | `scripts/02_running_variable.R` | ~10 s | `data/derived/company_year.rds` |
+| 3. Analysis samples | `scripts/03_analysis_sample.R` | <1 s | `data/derived/analysis_*.rds` |
+| 4. Descriptive exhibits | `scripts/exhibits/04_descriptives.R` | ~3 s | `output/exhibits/` |
+| 5–8. Results | `scripts/results/05`–`08` | ~8 min | `output/results/` |
 
 ---
 
-## Methodology
+## Methodology in brief
 
-### Running variable
-
-For company *c* in year *t*, with *D* the annual dividend rate on undivided ordinary stock:
+**Running variable.** For company *c* in year *t*, with *D* the annual dividend rate on undivided ordinary stock:
 
 ```
 X_ct = min(D_c,t-10, ..., D_c,t-1) - 3          senior securities eligible iff X_ct >= 0
 ```
 
-Three independent constructions of *D* are built:
+*D* is built three ways: from the printed "last four dividends" (main), from dated payments (timing check), and from the IMM's printed yield × price (an independently transcribed instrument).
 
-| Measure | Source | Role |
+**Outcome.** Each senior security's current yield relative to the median British senior railway yield in the same month, in basis points.
+
+| Design | Specification | Econometric tools |
 |---|---|---|
-| **Slot** | Two most recent of the "last four dividends" in the autumn/December issue | Main measure |
-| **Dated** | Dated payments (1883+), averaged by calendar year | Consistency check (same printed rates) |
-| **Yield-implied** | The IMM's printed yield × price ÷ amount paid, rounded to 1/8 | Instrument for misclassification (separately transcribed column) |
-
-Split stock (1:1 preferred + deferred ordinary) is recombined, and leased or jointly owned lines are excluded (`config/company_exclusions.csv`).
-
-### Outcome
-
-The outcome is each senior security's current yield relative to the median British senior railway yield in the same month, in basis points. Government bond prices are missing from the cleaned file for 1908–1914, so the benchmark comes from the railway market itself. Year fixed effects are also included.
-
-### Designs
-
-| Design | Specification | ECON 1117 / 2123 tools |
-|---|---|---|
-| Dividend management | `Pr(D >= 3) = F(AtStake x Post + ...)` on dividends within 0.5 pt of 3%; placebo thresholds 2, 4, 5% | LPM, logit, probit; difference-in-differences |
-| Regression discontinuity | Local linear at X = 0, year + class FE, h ∈ {MSE-opt, 0.5, 1, 1.5}, donut | RD, bandwidth choice, density test, covariate balance, placebo cutoffs |
+| Dividend management | `Pr(D >= 3) = F(AtStake x Post + ...)`, dividends within 0.5 pt of 3%; placebo thresholds 2, 4, 5% | LPM, logit, probit; difference-in-differences |
+| Regression discontinuity | Local linear at X = 0, year + class FE; h ∈ {MSE-optimal, 0.5, 1, 1.5}; donut | RD, bandwidth choice, density test, covariate balance, placebo cutoffs |
 | Difference-in-discontinuities | RD in 1894–1913 minus RD in 1879–1887 | Quasi-experimental design |
-| Panel | Security + year FE as companies cross the threshold | Panel fixed effects, two-way clustering |
-| Measurement error | Fuzzy RD / FE-2SLS instrumenting slot eligibility with yield-implied eligibility | IV, 2SLS, weak-instrument F |
-| Railways Act 1921 | Monthly DiD and quarterly event study; nearest-neighbor matched controls | DiD, event study, matching |
-| Inference | Company clusters, wild-cluster bootstrap (Webb weights), Holm and Romano–Wolf, Newey–West | Clustering, few clusters, multiple testing, time series |
+| Panel | Security + year FE as companies cross the threshold | Fixed effects, two-way clustering |
+| Measurement error | Fuzzy RD / FE-2SLS with the independent dividend measure | IV, 2SLS, weak-instrument F |
+| Railways Act 1921 | Monthly DiD, quarterly event study, nearest-neighbor matching | DiD, event study, matching |
+| Inference | Company clusters; wild-cluster bootstrap; Holm and Romano–Wolf; Newey–West | Few clusters, multiple testing, serial correlation |
+
+Full equations and choices are in [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md); variable definitions are in [`docs/CODEBOOK.md`](docs/CODEBOOK.md).
 
 ---
 
 ## Output guide
 
-### Tables (`output/tables/`)
+### Tables
 
 | File | Paper | Content |
 |---|---|---|
-| `table1_sample_flow` | Table 1 | Sample construction |
-| `table2_summary_stats` | Table 2 | Senior securities, 1894–1913, by eligibility and near the threshold |
-| `table7_dividend_management` | Table 3 | LPM / logit / probit bunching tests and placebo thresholds |
-| `table3_rd_main` | Table 4 | RD estimates (rdrobust; local linear h = 0.5, 1, 1.5; donut; company-year) |
-| `table4_rd_validity` | Table 5 | Covariate balance, density test, placebo cutoffs, pre-period RD, difference-in-discontinuities |
-| `table5_rd_by_class` | Table 6 | RD by security class with Holm and Romano–Wolf p-values |
-| `table6_panel_iv` | Table 7 | Within-security FE; fuzzy RD and FE-2SLS with first-stage F |
-| `table8_railways_act` | Table 8 | 1921 Act difference-in-differences (all and matched) |
-| `table_a1_yield_gap_nw` | Table 9 | Eligible-minus-ineligible yield gap, Newey–West |
-| `macros_*.tex` | — | Every statistic quoted in the paper, as LaTeX macros |
+| `exhibits/tables/table1_sample_flow` | Table 1 | Sample construction |
+| `exhibits/tables/table2_summary_stats` | Table 2 | Senior securities, 1894–1913, by eligibility and near the threshold |
+| `results/tables/table7_dividend_management` | Table 3 | LPM / logit / probit bunching tests and placebo thresholds |
+| `results/tables/table3_rd_main` | Table 4 | RD estimates (rdrobust; local linear h = 0.5, 1, 1.5; donut; company-year) |
+| `results/tables/table4_rd_validity` | Table 5 | Balance, density test, placebo cutoffs, pre-period RD, difference-in-discontinuities |
+| `results/tables/table5_rd_by_class` | Table 6 | RD by security class with Holm and Romano–Wolf p-values |
+| `results/tables/table6_panel_iv` | Table 7 | Within-security FE; fuzzy RD and FE-2SLS with first-stage F |
+| `results/tables/table8_railways_act` | Table 8 | 1921 Act difference-in-differences (all and matched) |
+| `exhibits/tables/table_a1_yield_gap_nw` | Table 9 | Eligible-minus-ineligible yield gap, Newey–West |
 
-Each table's notes are in a companion `*_notes.tex` file.
+Each table has a companion `*_notes.tex`. The `macros_*.tex` files hold every statistic quoted in the paper.
 
-### Figures (`output/figures/`, PDF + PNG)
+### Figures (PDF + PNG)
 
 | File | Paper | Content |
 |---|---|---|
-| `fig1_dividend_histories` | Figure 1 | Dividend records and eligibility, six companies |
-| `fig2_dividend_bunching` | Figure 2 | Dividends near 3% by regime and whether the record was at stake |
-| `fig3_running_variable` | Figure 3 | Distribution of X (mass at zero) |
-| `fig5_rd_plot` | Figure 4 | RD plots, 1894–1913 and 1879–1887 |
-| `fig6_bandwidth` | Figure 5 | Bandwidth sensitivity |
-| `fig7_placebo_cutoffs` | Figure 6 | Placebo thresholds |
-| `fig8_event_study` | Figure 7 | Railways Act 1921 event study |
-| `fig4_yield_gap` | Figure 8 | Eligible vs. ineligible senior yields, 1879–1913 |
+| `exhibits/figures/fig1_dividend_histories` | Figure 1 | Dividend records and eligibility, six companies |
+| `exhibits/figures/fig2_dividend_bunching` | Figure 2 | Dividends near 3% by regime and whether the record was at stake |
+| `exhibits/figures/fig3_running_variable` | Figure 3 | Distribution of X (mass at zero) |
+| `results/figures/fig5_rd_plot` | Figure 4 | RD plots, 1894–1913 and 1879–1887 |
+| `results/figures/fig6_bandwidth` | Figure 5 | Bandwidth sensitivity |
+| `results/figures/fig7_placebo_cutoffs` | Figure 6 | Placebo thresholds |
+| `results/figures/fig8_event_study` | Figure 7 | Railways Act 1921 event study |
+| `exhibits/figures/fig4_yield_gap` | Figure 8 | Eligible vs. ineligible senior yields, 1879–1913 |
 
 ---
 
 ## Data-construction notes
 
-These are the main judgment calls, each documented in the code:
+These are the main judgment calls, each documented in the code and in [`scripts/exhibits/QUALITY_REVIEW.md`](scripts/exhibits/QUALITY_REVIEW.md):
 
-- **Security types come from the raw monthly descriptions**, not from the cleaned file's static labels, which are occasionally wrong. For example, ID 33044 is the Midland's Consolidated Ordinary Stock but is labeled a branch line.
+- **Security types come from the raw monthly descriptions**, not from the cleaned file's static labels, which are occasionally wrong.
 - **Ditto lines** ("Do do", transcribed `? ?`) inherit the type of the line above on the page.
-- **Company identity** comes from the harmonized names, corrected by majority vote within each printed page block.
-- **Foreign lines** registered in London, the Isle of Man (outside "Great Britain or Ireland"), and **leased, jointly owned or guaranteed lines** (which qualify under s.1(h), not the dividend test) are excluded by a hand-coded, documented list.
+- **Company identity** comes from harmonized names, corrected by majority vote within each printed page block.
+- **Split ordinary stock** (1:1 preferred + deferred halves) is recombined to the undivided rate.
+- **Foreign lines** registered in London, the Isle of Man, and **leased, jointly owned or guaranteed lines** (which qualify under s.1(h), not the dividend test) are excluded by a documented list.
 - **Pence rounding** in the printed yield is undone by rounding the yield-implied dividend to the nearest 1/8%.
 
 ---
 
-## AI assistance
+## Project checklist
 
-This project was developed with the assistance of an AI model (Claude, Anthropic), which helped write and debug the code and draft the text. All design choices, results and interpretations should be checked by the reader against the code, which runs end to end from the public data.
+Before running:
+- [ ] Downloaded `Railways_new.csv` and `Totaldata.csv` into `data/raw/`
+- [ ] Installed the R packages above
+
+To reproduce the paper:
+- [ ] `Rscript scripts/run_all.R`
+- [ ] Check `output/exhibits/` and `output/results/`
+- [ ] `cd paper && latexmk -pdf main.tex`
 
 ---
 
@@ -199,7 +216,6 @@ Questions about the code or methodology are welcome as GitHub issues.
 ## Acknowledgments
 
 - **Data:** International Center for Finance, Yale School of Management, for digitizing and distributing the *Investors Monthly Manual*.
-- **Template:** Repository layout follows [321gonzalezj/HMDA-Mortgage-Lending-Analysis](https://github.com/321gonzalezj/HMDA-Mortgage-Lending-Analysis).
 - **Tools:** R with `data.table`, `fixest`, `rdrobust`, `rddensity`, `sandwich` and `ggplot2`.
 
 ## Selected references
@@ -209,3 +225,5 @@ Questions about the code or methodology are welcome as GitHub issues.
 - Goetzmann, W. N. and K. G. Rouwenhorst (2026). Capital structure, seniority, and risk premia: Evidence from the London Stock Exchange, 1870–1929. NBER Working Paper 34899.
 - Kisgen, D. J. and P. E. Strahan (2010). Do regulations based on credit ratings affect a firm's cost of capital? *Review of Financial Studies* 23(12).
 - Trustee Act 1893 (56 & 57 Vict. c. 53), s. 1(g); Railways Act 1921 (11 & 12 Geo. 5 c. 55), s. 15.
+
+The full source list is in [`docs/SOURCES.md`](docs/SOURCES.md).

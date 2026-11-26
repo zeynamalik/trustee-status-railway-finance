@@ -23,6 +23,7 @@
 # ============================================================================
 
 source("scripts/00_utils.R")
+use_output("results")
 print_header("STEP 8: RAILWAYS ACT 1921")
 
 br <- readRDS(file.path(DERIVED_DIR, "sec_month.rds"))

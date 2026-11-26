@@ -16,17 +16,17 @@
 \captionsetup{font=small,labelfont=bf}
 \setstretch{1.25}
 
-% Every number below comes from the replication scripts (output/tables/macros_*.tex)
-\input{../output/tables/macros_descriptives.tex}
-\input{../output/tables/macros_rd.tex}
-\input{../output/tables/macros_panel.tex}
-\input{../output/tables/macros_divmgmt.tex}
-\input{../output/tables/macros_act1921.tex}
+% Every number below comes from the replication scripts (output/*/tables/macros_*.tex)
+\input{../output/exhibits/tables/macros_descriptives.tex}
+\input{../output/results/tables/macros_rd.tex}
+\input{../output/results/tables/macros_panel.tex}
+\input{../output/results/tables/macros_divmgmt.tex}
+\input{../output/results/tables/macros_act1921.tex}
 
 \newcommand{\tabnote}[1]{\par\vspace{3pt}\begin{minipage}{\textwidth}\footnotesize\setstretch{1}\textit{Notes:} \input{#1}\end{minipage}}
 
 \title{\textbf{Trustee Status and the Cost of Railway Capital:}\\[2pt]
-\large Regulatory Eligibility, Dividend Management, and Bond Prices in Britain, 1879--1922\thanks{Independent research project. Code and data instructions: \url{https://github.com/zeynamalik/trustee-status-railway-finance}. Data: Investors Monthly Manual, International Center for Finance, Yale School of Management. The code and text were developed with the assistance of an AI model (Claude, Anthropic); all errors are my own.}}
+\large Regulatory Eligibility, Dividend Management, and Bond Prices in Britain, 1879--1922\thanks{Independent research project. Code and data instructions: \url{https://github.com/zeynamalik/trustee-status-railway-finance}. Data: Investors Monthly Manual, International Center for Finance, Yale School of Management. All errors are my own.}}
 \author{Zeyna Malik}
 \date{November 2026}
 
@@ -254,56 +254,56 @@ Webb, M.~D. (2023). Reworking wild bootstrap-based inference for clustered error
 
 \begin{table}[p]\centering
 \caption{Sample construction}\label{tab:flow}
-\input{../output/tables/table1_sample_flow.tex}
-\tabnote{../output/tables/table1_sample_flow_notes.tex}
+\input{../output/exhibits/tables/table1_sample_flow.tex}
+\tabnote{../output/exhibits/tables/table1_sample_flow_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Summary statistics, senior railway securities, 1894--1913}\label{tab:summary}
-\adjustbox{max width=\textwidth}{\input{../output/tables/table2_summary_stats.tex}}
-\tabnote{../output/tables/table2_summary_stats_notes.tex}
+\adjustbox{max width=\textwidth}{\input{../output/exhibits/tables/table2_summary_stats.tex}}
+\tabnote{../output/exhibits/tables/table2_summary_stats_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Dividend management at the 3\% threshold}\label{tab:divmgmt}
-\adjustbox{max width=\textwidth}{\input{../output/tables/table7_dividend_management.tex}}
-\tabnote{../output/tables/table7_dividend_management_notes.tex}
+\adjustbox{max width=\textwidth}{\input{../output/results/tables/table7_dividend_management.tex}}
+\tabnote{../output/results/tables/table7_dividend_management_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Trustee eligibility and senior yields: regression-discontinuity estimates}\label{tab:rd}
-\adjustbox{max width=\textwidth}{\input{../output/tables/table3_rd_main.tex}}
-\tabnote{../output/tables/table3_rd_main_notes.tex}
+\adjustbox{max width=\textwidth}{\input{../output/results/tables/table3_rd_main.tex}}
+\tabnote{../output/results/tables/table3_rd_main_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Validity of the regression discontinuity}\label{tab:validity}
-\adjustbox{max width=\textwidth}{\input{../output/tables/table4_rd_validity.tex}}
-\tabnote{../output/tables/table4_rd_validity_notes.tex}
+\adjustbox{max width=\textwidth}{\input{../output/results/tables/table4_rd_validity.tex}}
+\tabnote{../output/results/tables/table4_rd_validity_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Estimates by security class with multiple-testing corrections}\label{tab:byclass}
-\adjustbox{max width=\textwidth}{\input{../output/tables/table5_rd_by_class.tex}}
-\tabnote{../output/tables/table5_rd_by_class_notes.tex}
+\adjustbox{max width=\textwidth}{\input{../output/results/tables/table5_rd_by_class.tex}}
+\tabnote{../output/results/tables/table5_rd_by_class_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Within-security and instrumental-variable estimates}\label{tab:paneliv}
-\adjustbox{max width=\textwidth}{\input{../output/tables/table6_panel_iv.tex}}
-\tabnote{../output/tables/table6_panel_iv_notes.tex}
+\adjustbox{max width=\textwidth}{\input{../output/results/tables/table6_panel_iv.tex}}
+\tabnote{../output/results/tables/table6_panel_iv_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Trustee status by statute: the Railways Act 1921}\label{tab:act}
-\adjustbox{max width=\textwidth}{\input{../output/tables/table8_railways_act.tex}}
-\tabnote{../output/tables/table8_railways_act_notes.tex}
+\adjustbox{max width=\textwidth}{\input{../output/results/tables/table8_railways_act.tex}}
+\tabnote{../output/results/tables/table8_railways_act_notes.tex}
 \end{table}
 
 \begin{table}[p]\centering
 \caption{Eligible-minus-ineligible yield gap over time (Appendix)}\label{tab:gapnw}
-\input{../output/tables/table_a1_yield_gap_nw.tex}
-\tabnote{../output/tables/table_a1_yield_gap_nw_notes.tex}
+\input{../output/exhibits/tables/table_a1_yield_gap_nw.tex}
+\tabnote{../output/exhibits/tables/table_a1_yield_gap_nw_notes.tex}
 \end{table}
 
 % ============================================================================
@@ -312,42 +312,42 @@ Webb, M.~D. (2023). Reworking wild bootstrap-based inference for clustered error
 \clearpage
 
 \begin{figure}[p]\centering
-\includegraphics[width=\textwidth]{../output/figures/fig1_dividend_histories.pdf}
+\includegraphics[width=\textwidth]{../output/exhibits/figures/fig1_dividend_histories.pdf}
 \caption{Ordinary dividends and trustee eligibility, six companies. Solid line: annual dividend on ordinary stock. Dashed grey line: minimum over the previous ten years. Dashed orange line: the 3\% threshold. Shading: years in which the company's senior stocks were trustee-eligible.}\label{fig:histories}
 \end{figure}
 
 \begin{figure}[p]\centering
-\includegraphics[width=\textwidth]{../output/figures/fig2_dividend_bunching.pdf}
+\includegraphics[width=\textwidth]{../output/exhibits/figures/fig2_dividend_bunching.pdf}
 \caption{Dividend bunching at the threshold. Company-years by annual ordinary dividend (0.25-point bins). ``Record at stake'': the company paid at least 3\% in each of the previous nine years, so a lower dividend this year breaks a ten-year record.}\label{fig:bunching}
 \end{figure}
 
 \begin{figure}[p]\centering
-\includegraphics[width=0.9\textwidth]{../output/figures/fig3_running_variable.pdf}
+\includegraphics[width=0.9\textwidth]{../output/exhibits/figures/fig3_running_variable.pdf}
 \caption{Distribution of the running variable, company-years 1894--1913. The spike at $X = 0$ is companies whose ten-year minimum is exactly 3.00\%.}\label{fig:rv}
 \end{figure}
 
 \begin{figure}[p]\centering
-\includegraphics[width=\textwidth]{../output/figures/fig5_rd_plot.pdf}
+\includegraphics[width=\textwidth]{../output/results/figures/fig5_rd_plot.pdf}
 \caption{Senior yields at the eligibility threshold. Points: mean yield relative to market, net of year and security-class effects, in 0.125-point bins of $X$ (size proportional to observations). Lines: separate linear fits within one point of the threshold, with 95\% confidence bands.}\label{fig:rd}
 \end{figure}
 
 \begin{figure}[p]\centering
-\includegraphics[width=0.85\textwidth]{../output/figures/fig6_bandwidth.pdf}
+\includegraphics[width=0.85\textwidth]{../output/results/figures/fig6_bandwidth.pdf}
 \caption{Bandwidth sensitivity. Local linear RD estimates (1894--1913) and 95\% confidence intervals clustered by company.}\label{fig:bandwidth}
 \end{figure}
 
 \begin{figure}[p]\centering
-\includegraphics[width=0.85\textwidth]{../output/figures/fig7_placebo_cutoffs.pdf}
+\includegraphics[width=0.85\textwidth]{../output/results/figures/fig7_placebo_cutoffs.pdf}
 \caption{Placebo cutoffs. RD estimates ($h = 0.5$) at false thresholds, each using only observations on one side of the true threshold; the true threshold is highlighted.}\label{fig:placebo}
 \end{figure}
 
 \begin{figure}[p]\centering
-\includegraphics[width=0.9\textwidth]{../output/figures/fig8_event_study.pdf}
+\includegraphics[width=0.9\textwidth]{../output/results/figures/fig8_event_study.pdf}
 \caption{The Railways Act 1921: event study. Quarterly differences in senior yields between amalgamated companies that gained trustee status only through s.15 and those that already qualified, relative to 1920Q2, with security and month fixed effects and 95\% intervals clustered by company.}\label{fig:event}
 \end{figure}
 
 \begin{figure}[p]\centering
-\includegraphics[width=0.9\textwidth]{../output/figures/fig4_yield_gap.pdf}
+\includegraphics[width=0.9\textwidth]{../output/exhibits/figures/fig4_yield_gap.pdf}
 \caption{Senior yields of eligible and ineligible companies, 1879--1913. Annual means of yields relative to market. Shading: the 1888--1893 reforms.}\label{fig:gap}
 \end{figure}
 

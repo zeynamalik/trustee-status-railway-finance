@@ -18,6 +18,7 @@
 # ============================================================================
 
 source("scripts/00_utils.R")
+use_output("results")
 print_header("STEP 7: DIVIDEND MANAGEMENT AT THE THRESHOLD")
 
 cy <- readRDS(file.path(DERIVED_DIR, "company_year.rds"))[excluded == FALSE & !is.na(div) & !is.na(min9)]

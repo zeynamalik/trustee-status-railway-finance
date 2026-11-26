@@ -18,6 +18,7 @@
 # ============================================================================
 
 source("scripts/00_utils.R")
+use_output("results")
 print_header("STEP 6: PANEL FIXED EFFECTS AND IV")
 
 senior <- readRDS(file.path(DERIVED_DIR, "analysis_senior.rds"))

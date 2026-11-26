@@ -7,6 +7,7 @@
 # ============================================================================
 
 source("scripts/00_utils.R")
+use_output("exhibits")
 suppressPackageStartupMessages(library(sandwich))
 print_header("STEP 4: DESCRIPTIVE EXHIBITS")
 
