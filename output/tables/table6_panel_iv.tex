@@ -1,0 +1,16 @@
+\begin{tabular}{lcccccc}
+\toprule
+ & (1) FE & (2) FE & (3) FE & (4) First stage & (5) Fuzzy RD & (6) FE-2SLS \\
+\midrule
+Trustee eligible & -4.7 & 5.0 & 5.0 &  & 8.9 & -8.2 \\
+ & (3.7) & (11.2) & (11.0) &  & (6.7) & (2.3) \\
+Instrument (yield-implied measure eligible) &  &  &  & 0.842 &  &  \\
+ &  &  &  & (0.132) &  &  \\
+First-stage $F$ (cluster-robust Wald) &  &  &  &  & 40.5 & 55.9 \\
+Dividend controls & No & Yes & Yes & No & No & Yes \\
+Fixed effects & Security, year & Security, year & Security, year & Year, class & Year, class & Security, year \\
+Companies switching eligibility & 5 & 5 & 5 & -- & -- & 3 \\
+Clustering & Company & Company & Company, year & Company & Company & Company \\
+Observations & 3,926 & 3,893 & 3,893 & 885 & 885 & 1,658 \\
+\bottomrule
+\end{tabular}
