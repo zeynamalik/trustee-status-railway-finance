@@ -1,0 +1,39 @@
+# ============================================================================
+# .gitignore for Trustee Status and the Cost of Railway Capital
+# ============================================================================
+
+# Raw and derived data: the IMM data may not be redistributed (see data/README.md)
+data/raw/*
+data/derived/*
+!data/raw/.gitkeep
+!data/derived/.gitkeep
+*.csv
+!config/*.csv
+
+# R temporary files
+.Rhistory
+.RData
+.Rproj.user
+*.Rproj
+Rplots.pdf
+
+# LaTeX build files
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/*.toc
+
+# System and editor files
+.DS_Store
+Thumbs.db
+*~
+*.swp
+.vscode/
+.idea/
+.claude/
+paper/main.pdf
